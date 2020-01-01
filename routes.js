@@ -14,6 +14,13 @@ module.exports = function (app) {
     });
 
     /**************************************** 
+     * Dashboard API
+    ****************************************/
+    app.get('/:version/info', function (req, res, next) {
+        return controller[req.params.version].common.dashboardInfo(req, res, next)
+    });
+
+    /**************************************** 
      * General CRUD API For each entity (Entity LOV: sales, product, inventory, outlet, employee)
     ****************************************/
     app.get('/:version/:entity', function (req, res, next) {
@@ -40,5 +47,5 @@ module.exports = function (app) {
     // - API security
     // - Input value checking
 
- 
+
 };

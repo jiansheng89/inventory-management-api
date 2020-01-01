@@ -6,11 +6,7 @@ function salesSchema() {
     var schema = {
         salesId: String,
         totalSales: Number,
-        salesItem: [{
-            _id: ObjectId,
-            name: String,
-            quantity: Number
-        }],
+        salesItem: [],
         salesDate: Date,
     };
 

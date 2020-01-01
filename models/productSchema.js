@@ -6,11 +6,7 @@ function productSchema() {
     var schema = {
         name: String,
         price: Number,
-        recipe: [{
-            _id: ObjectId,
-            name: String,
-            requiredAmount: Number
-        }]
+        recipe: []
     };
 
     var collectionName = 'product';
