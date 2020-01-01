@@ -52,9 +52,16 @@ exports.create = (req, res) => {
     let schema = findSchema(req.params.entity);
     if (schema) {
         schema.create(req.body, function (err, parking) {
+
             if (err) return res.json(err);
+            //call stock deduct function whenever new sales create
+            if (req.params.entity == 'sales') {
+                updateStock(req.body.salesItem)
+            }
             res.json(parking);
         })
+
+
     } else {
         res.status(503);
         res.send();
@@ -87,3 +94,17 @@ exports.delete = (req, res) => {
         res.send();
     }
 };
+
+function updateStock(salesItem) {
+    for (let item of salesItem) {
+        productSchema.findOne({ _id: mongoose.mongo.ObjectId(item._id) }, function (err, product) {
+            if (err) return res.json(err);
+            for (let recipeItem of product.recipe) {
+                inventorySchema.findOneAndUpdate({ _id: mongoose.mongo.ObjectId(recipeItem._id) }, { $inc: { totalQualtity: -(recipeItem.amount) } },function(err, response) {
+                    if (err) console.log(err);
+                })
+            }
+        })
+    }
+
+}

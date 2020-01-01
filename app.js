@@ -33,7 +33,6 @@ app.use(cors.actual);
 //Add header for exception
 app.use(function (req, res, next) {
     if (req.method === "OPTIONS") {
-        console.log("option")
         return res.status(200).end();
     }
     res.setHeader("Access-Control-Allow-Headers", "Content-Type")
